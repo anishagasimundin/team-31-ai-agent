@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AttendEase - Modern Attendance Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside>
+            <div class="sidebar-header">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>AttendEase</h1>
+                    <span>Manager Pro</span>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a class="nav-item active" onclick="switchView('dashboard', this)">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a class="nav-item" onclick="switchView('attendance', this)">
+                    <i class="fa-solid fa-clipboard-user"></i>
+                    <span>Mark Attendance</span>
+                </a>
+                <a class="nav-item" onclick="switchView('students', this)">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Students Directory</span>
+                </a>
+                <a class="nav-item" onclick="switchView('reports', this)">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span>Reports & Export</span>
+                </a>
+            </div>
+            <div class="sidebar-footer">
+                <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="btn btn-secondary" onclick="resetDemoData()" title="Reset Data" style="padding: 8px 12px; font-size: 0.8rem;">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Area -->
+        <main>
+            <header>
+                <div class="header-title">
+                    <h2 id="headerTitle">Dashboard Overview</h2>
+                    <p id="headerSubtitle">Monitor daily attendance and student metrics.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="openModal('addStudentModal')">
+                        <i class="fa-solid fa-user-plus"></i> Add Student
+                    </button>
+                    <button class="btn btn-primary" onclick="markAllPresent()">
+                        <i class="fa-solid fa-check-double"></i> Mark All Present
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <!-- VIEW 1: DASHBOARD -->
+                <section id="dashboardView" class="view-section active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-label">Total Students</span>
+                                <div class="stat-icon purple"><i class="fa-solid fa-users"></i></div>
+                            </div>
+                            <div class="stat-value" id="statTotalStudents">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-label">Present Today</span>
+                                <div class="stat-icon green"><i class="fa-solid fa-user-check"></i></div>
+                            </div>
+                            <div class="stat-value" id="statPresentToday">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-label">Absent Today</span>
+                                <div class="stat-icon red"><i class="fa-solid fa-user-xmark"></i></div>
+                            </div>
+                            <div class="stat-value" id="statAbsentToday">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-label">Attendance Rate</span>
+                                <div class="stat-icon yellow"><i class="fa-solid fa-percent"></i></div>
+                            </div>
+                            <div class="stat-value" id="statRate">0%</div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 32px;" class="dashboard-grid">
+                        <div class="card" style="padding: 24px; margin-bottom: 0;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                                <h3>Quick Course Overview</h3>
+                                <span class="badge badge-excused">Active Semester</span>
+                            </div>
+                            <p style="color: var(--text-secondary); margin-bottom: 16px;">Computer Science 101 - Advanced Web Development & Data Structures</p>
+                            <div style="display: flex; gap: 16px; margin-top: 24px;">
+                                <div style="flex: 1; background: var(--bg-secondary); padding: 16px; border-radius: 12px; border: 1px solid var(--border);">
+                                    <span style="font-size: 0.8rem; color: var(--text-secondary);">Last Session</span>
+                                    <h4 style="font-size: 1.1rem; margin-top: 4px;">Yesterday, 10:00 AM</h4>
+                                </div>
+                                <div style="flex: 1; background: var(--bg-secondary); padding: 16px; border-radius: 12px; border: 1px solid var(--border);">
+                                    <span style="font-size: 0.8rem; color: var(--text-secondary);">Average Attendance</span>
+                                    <h4 style="font-size: 1.1rem; margin-top: 4px; color: var(--success);" id="avgAttendanceText">92%</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card" style="padding: 24px; margin-bottom: 0; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <h3>Quick Actions</h3>
+                                <p style="color: var(--text-secondary); font-size: 0.875rem; margin-top: 4px;">Frequent tasks</p>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
+                                <button class="btn btn-secondary" onclick="switchView('attendance', document.querySelectorAll('.nav-item')[1])" style="justify-content: flex-start;">
+                                    <i class="fa-solid fa-clipboard-user" style="color: var(--accent);"></i> Mark Today's Attendance
+                                </button>
+                                <button class="btn btn-secondary" onclick="openModal('addStudentModal')" style="justify-content: flex-start;">
+                                    <i class="fa-solid fa-user-plus" style="color: var(--success);"></i> Register New Student
+                                </button>
+                                <button class="btn btn-secondary" onclick="switchView('reports', document.querySelectorAll('.nav-item')[3])" style="justify-content: flex-start;">
+                                    <i class="fa-solid fa-download" style="color: var(--warning);"></i> Export Attendance Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div style="padding: 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between;">
+                            <h3>Recent Attendance Activity</h3>
+                            <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px 12px;" onclick="switchView('attendance', document.querySelectorAll('.nav-item')[1])">View All</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Student ID</th>
+                                        <th>Course</th>
+                                        <th>Status</th>
+                                        <th>Time Recorded</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentActivityTable">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 2: MARK ATTENDANCE -->
+                <section id="attendanceView" class="view-section">
+                    <div class="controls-bar">
+                        <div class="search-box">
+                            <i class="fa-solid fa-search"></i>
+                            <input type="text" id="attendanceSearch" placeholder="Search student by name or ID..." oninput="filterAttendanceTable()">
+                        </div>
+                        <div class="filter-group">
+                            <input type="date" id="attendanceDate" class="select-custom" onchange="loadAttendanceForDate()">
+                            <select id="attendanceStatusFilter" class="select-custom" onchange="filterAttendanceTable()">
+                                <option value="all">All Statuses</option>
+                                <option value="Present">Present</option>
+                                <option value="Absent">Absent</option>
+                                <option value="Late">Late</option>
+                                <option value="Excused">Excused</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>ID Number</th>
+                                        <th>Email</th>
+                                        <th>Attendance Status</th>
+                                        <th>Quick Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendanceTableBody">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 3: STUDENTS DIRECTORY -->
+                <section id="studentsView" class="view-section">
+                    <div class="controls-bar">
+                        <div class="search-box">
+                            <i class="fa-solid fa-search"></i>
+                            <input type="text" id="studentSearch" placeholder="Search students..." oninput="filterStudentsTable()">
+                        </div>
+                        <button class="btn btn-primary" onclick="openModal('addStudentModal')">
+                            <i class="fa-solid fa-user-plus"></i> Add New Student
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>ID Number</th>
+                                        <th>Email</th>
+                                        <th>Course</th>
+                                        <th>Overall Attendance</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentsTableBody">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 4: REPORTS & EXPORT -->
+                <section id="reportsView" class="view-section">
+                    <div class="card" style="padding: 32px; margin-bottom: 24px;">
+                        <h3 style="margin-bottom: 8px;">Attendance Analytics & Export</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 24px;">Generate summary reports, review statistics, and export student attendance data.</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                            <div style="background: var(--bg-secondary); padding: 20px; border-radius: 16px; border: 1px solid var(--border);">
+                                <h4 style="margin-bottom: 8px;"><i class="fa-solid fa-file-csv" style="color: var(--accent);"></i> CSV Export</h4>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">Download complete attendance record for spreadsheet software (Excel, Google Sheets).</p>
+                                <button class="btn btn-secondary" onclick="exportCSV()"><i class="fa-solid fa-download"></i> Download CSV</button>
+                            </div>
+                            <div style="background: var(--bg-secondary); padding: 20px; border-radius: 16px; border: 1px solid var(--border);">
+                                <h4 style="margin-bottom: 8px;"><i class="fa-solid fa-print" style="color: var(--success);"></i> Printable Summary</h4>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">Open a clean printer-friendly report view for official records.</p>
+                                <button class="btn btn-secondary" onclick="printReport()"><i class="fa-solid fa-print"></i> Print Report</button>
+                            </div>
+                            <div style="background: var(--bg-secondary); padding: 20px; border-radius: 16px; border: 1px solid var(--border);">
+                                <h4 style="margin-bottom: 8px;"><i class="fa-solid fa-envelope-circle-check" style="color: var(--warning);"></i> Low Attendance Alert</h4>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">Identify students with less than 75% attendance rate.</p>
+                                <button class="btn btn-secondary" onclick="showLowAttendance()"><i class="fa-solid fa-triangle-exclamation"></i> View At-Risk</button>
+                            </div>
+                        </div>
+
+                        <div id="reportResultContainer"></div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL: ADD STUDENT -->
+    <div class="modal-overlay" id="addStudentModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Add New Student</h3>
+                <button class="close-btn" onclick="closeModal('addStudentModal')">&times;</button>
+            </div>
+            <form id="addStudentForm" onsubmit="handleAddNewStudent(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="newStudentName" class="form-control" placeholder="e.g. Alex Johnson" required>
+                </div>
+                <div class="form-group">
+                    <label>Student ID</label>
+                    <input type="text" id="newStudentId" class="form-control" placeholder="e.g. STU1025" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="newStudentEmail" class="form-control" placeholder="e.g. alex.j@university.edu" required>
+                </div>
+                <div class="form-group">
+                    <label>Course</label>
+                    <input type="text" id="newStudentCourse" class="form-control" value="Computer Science 101" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addStudentModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

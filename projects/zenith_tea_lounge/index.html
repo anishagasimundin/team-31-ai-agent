@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith Tea Lounge - Artisanal Loose Leaf & Matcha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="nav-logo">
+            <i class="fa-solid fa-leaf"></i>
+            <h1>Zenith Tea</h1>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#menu" class="active">Tea Menu</a></li>
+            <li><a href="#about">Our Story</a></li>
+            <li><a href="#pricing">Clubs & Pricing</a></li>
+            <li><a href="#reviews">Testimonials</a></li>
+            <li><a href="#contact">Location & Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <a href="#contact" class="btn btn-primary">Reserve a Table</a>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars" id="menuIcon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#menu" onclick="toggleMobileMenu()">Tea Menu</a>
+        <a href="#about" onclick="toggleMobileMenu()">Our Story</a>
+        <a href="#pricing" onclick="toggleMobileMenu()">Clubs & Pricing</a>
+        <a href="#reviews" onclick="toggleMobileMenu()">Testimonials</a>
+        <a href="#contact" onclick="toggleMobileMenu()">Location & Contact</a>
+        <a href="#contact" class="btn btn-primary" style="justify-content: center; margin-top: 8px;" onclick="toggleMobileMenu()">Reserve a Table</a>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="hero" id="about">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fa-solid fa-seedling"></i> 100% Organic Single-Estate Teas
+            </div>
+            <h1>Sip Serenity in Every <span>Handcrafted Cup</span></h1>
+            <p>Immerse your senses in rare ceremonial matcha, delicate white teas, and aromatic herbal infusions sourced directly from high-altitude Asian gardens.</p>
+            <div class="hero-buttons">
+                <a href="#menu" class="btn btn-primary"><i class="fa-solid fa-mug-hot"></i> Explore Menu</a>
+                <a href="#contact" class="btn btn-secondary">Visit Our Sanctuary</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="hero-img-card">
+                <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=800" alt="Ceremonial Tea">
+            </div>
+            <div class="hero-float-badge">
+                <i class="fa-solid fa-star"></i>
+                <div>
+                    <h4 style="font-weight: 700; font-size: 1.1rem;">4.9 / 5.0</h4>
+                    <span style="font-size: 0.85rem; color: var(--text-secondary);">Over 980+ tea lovers</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menu Section -->
+    <section id="menu">
+        <div class="section-header">
+            <span>Our Brews</span>
+            <h2>Curated Artisanal Tea Menu</h2>
+            <p>From ceremonial grade matcha whisks to soothing herbal botanicals, explore our carefully curated selection.</p>
+        </div>
+
+        <div class="menu-categories">
+            <button class="menu-tab active" onclick="filterMenu('all', this)">All Teas</button>
+            <button class="menu-tab" onclick="filterMenu('matcha', this)">Matcha & Green</button>
+            <button class="menu-tab" onclick="filterMenu('oolong', this)">Oolong & Black</button>
+            <button class="menu-tab" onclick="filterMenu('herbal', this)">Herbal & Floral</button>
+        </div>
+
+        <div class="menu-grid" id="menuGrid">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <!-- Pricing / Subscription Section -->
+    <section id="pricing">
+        <div class="section-header">
+            <span>Memberships & Tasting</span>
+            <h2>Tea Tasting Clubs & Pricing</h2>
+            <p>Elevate your daily ritual with our monthly leaf delivery subscriptions or book an authentic tea ceremony masterclass.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Daily Tea Pass</h3>
+                <p class="desc">Unlimited access to our daily house brew and calm lounge seating.</p>
+                <div class="pricing-price">$39 <span>/ month</span></div>
+                <ul class="pricing-features">
+                    <li><i class="fa-solid fa-check"></i> Any daily loose leaf or iced tea</li>
+                    <li><i class="fa-solid fa-check"></i> 15% off all retail tin purchases</li>
+                    <li><i class="fa-solid fa-check"></i> Free Wi-Fi & quiet reading nook</li>
+                    <li><i class="fa-solid fa-check"></i> 1 free artisanal mochi per week</li>
+                </ul>
+                <button class="btn btn-secondary" onclick="showToast('Selected Daily Tea Pass!')">Choose Plan</button>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="featured-badge">Most Popular</div>
+                <h3>Leaf Collector Box</h3>
+                <p class="desc">Delivered to your doorstep: rare seasonal harvests from pristine estates.</p>
+                <div class="pricing-price">$32 <span>/ month</span></div>
+                <ul class="pricing-features">
+                    <li><i class="fa-solid fa-check"></i> Three 50g tins of rare loose leaf tea</li>
+                    <li><i class="fa-solid fa-check"></i> Sourced from Japan, Taiwan & India</li>
+                    <li><i class="fa-solid fa-check"></i> Free worldwide carbon-neutral shipping</li>
+                    <li><i class="fa-solid fa-check"></i> Tasting notes & brewing temperature guide</li>
+                </ul>
+                <button class="btn btn-primary" onclick="showToast('Subscribed to Leaf Collector Box!', 'success')">Subscribe Now</button>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Tea Master Ceremony</h3>
+                <p class="desc">Private guided workshop exploring Japanese Chanoyu tea traditions.</p>
+                <div class="pricing-price">$95 <span>/ guest</span></div>
+                <ul class="pricing-features">
+                    <li><i class="fa-solid fa-check"></i> 2-hour immersive bamboo whisking masterclass</li>
+                    <li><i class="fa-solid fa-check"></i> Traditional ceramic chawan bowl included</li>
+                    <li><i class="fa-solid fa-check"></i> Pairing with seasonal wagashi sweets</li>
+                    <li><i class="fa-solid fa-check"></i> Official Tea Master Certification</li>
+                </ul>
+                <button class="btn btn-secondary" onclick="showToast('Enrolled in Tea Master Ceremony!')">Book Workshop</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews">
+        <div class="section-header">
+            <span>Guest Reflections</span>
+            <h2>What Our Community Says</h2>
+            <p>Read heartfelt thoughts from guests who found their peaceful escape at Zenith Tea.</p>
+        </div>
+
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p>"Stepping into Zenith Tea instantly lowers my heart rate. Their ceremonial Uji matcha is the most authentic I've tasted outside of Kyoto. An absolute sanctuary!"</p>
+                <div class="review-author">
+                    <div class="author-avatar">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200" alt="Reviewer">
+                    </div>
+                    <div class="author-info">
+                        <h4>Aria Sterling</h4>
+                        <span>Mindfulness Coach</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p>"The Leaf Collector subscription is the highlight of my month. Unboxing fresh Taiwanese Oolong and reading the estate notes is pure joy for any tea lover."</p>
+                <div class="review-author">
+                    <div class="author-avatar">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200" alt="Reviewer">
+                    </div>
+                    <div class="author-info">
+                        <h4>Dr. Julian Vance</h4>
+                        <span>Botanist & Author</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p>"Gorgeous minimalist aesthetics, wonderfully calming ambient music, and staff who treat tea brewing with sacred reverence. My favorite Sunday retreat."</p>
+                <div class="review-author">
+                    <div class="author-avatar">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=200" alt="Reviewer">
+                    </div>
+                    <div class="author-info">
+                        <h4>Mei-Ling Zhou</h4>
+                        <span>Architect</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Contact Section -->
+    <section id="contact">
+        <div class="section-header">
+            <span>Find Our Sanctuary</span>
+            <h2>Location & Contact</h2>
+            <p>Visit our tea lounge in the heart of the botanical district or send us a message for private reservations.</p>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info-side">
+                <h3>Visit Zenith Tea</h3>
+                <p style="color: var(--text-secondary);">We invite you to slow down, unplug, and enjoy a warm cup of mindful tea.</p>
+                
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="info-text">
+                        <h4>Location</h4>
+                        <p>108 Lotus Blossom Way, Botanical Quarter, Zen Garden Tower</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
+                    <div class="info-text">
+                        <h4>Opening Hours</h4>
+                        <p>Mon - Fri: 8:00 AM – 8:00 PM<br>Sat - Sun: 9:00 AM – 9:00 PM</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+                    <div class="info-text">
+                        <h4>Phone & Email</h4>
+                        <p>+1 (555) 843-9200<br>hello@zenithtea.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-side">
+                <h3 style="margin-bottom: 24px; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;">Reserve a Table</h3>
+                <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" id="contactName" class="form-control" placeholder="e.g. Elena Rostova" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="contactEmail" class="form-control" placeholder="e.g. elena@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Reservation Details / Notes</label>
+                        <textarea id="contactMessage" class="form-control" rows="4" placeholder="Quiet window table for 2 this Saturday at 3 PM..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Send Reservation Request</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="nav-logo" style="margin-bottom: 16px;">
+                    <i class="fa-solid fa-leaf"></i>
+                    <h1>Zenith Tea</h1>
+                </div>
+                <p>Artisanal tea lounge dedicated to mindful living, ancient botanical traditions, and absolute purity in every single leaf.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#menu">Tea Menu</a></li>
+                    <li><a href="#about">Our Story</a></li>
+                    <li><a href="#pricing">Tasting Clubs</a></li>
+                    <li><a href="#reviews">Testimonials</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Specialty Brews</h3>
+                <ul>
+                    <li><a href="#menu">Ceremonial Matcha</a></li>
+                    <li><a href="#menu">Silver Needle White</a></li>
+                    <li><a href="#menu">High Mountain Oolong</a></li>
+                    <li><a href="#menu">Jasmine Pearls</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Newsletter</h3>
+                <p>Subscribe for rare harvest announcements, brewing tips, and exclusive VIP tasting invites.</p>
+                <form onsubmit="event.preventDefault(); showToast('Subscribed to tea journal!', 'success');" style="display: flex; gap: 8px;">
+                    <input type="email" placeholder="Your email..." class="form-control" required style="font-size: 0.85rem; padding: 10px 14px;">
+                    <button type="submit" class="btn btn-primary" style="padding: 10px 16px;"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Zenith Tea Lounge. All rights reserved.</p>
+            <p>Crafted with mindfulness and botanical care.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

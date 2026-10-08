@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neon Counter | Interactive Web App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+
+  <div class="container">
+    <header>
+      <h1>Neon Counter</h1>
+      <p>Tap, increment, and feel the glow</p>
+    </header>
+
+    <div class="counter-display" id="counterDisplay">0</div>
+
+    <div class="controls">
+      <button class="btn btn-decrement" id="decBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        DECREASE
+      </button>
+      <button class="btn btn-increment" id="incBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        INCREASE
+      </button>
+    </div>
+
+    <div class="btn-secondary-container">
+      <button class="btn btn-reset" id="resetBtn">Reset</button>
+      <button class="btn btn-step" id="stepBtn">Step: <span id="stepValue">1</span></button>
+    </div>
+
+    <div class="step-info">
+      Keyboard shortcut: Use <span style="font-family: monospace;">↑</span> / <span style="font-family: monospace;">↓</span> arrow keys
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

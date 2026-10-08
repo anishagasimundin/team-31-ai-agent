@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velvet & Bean - Artisanal Coffee House</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="nav-logo">
+            <i class="fa-solid fa-mug-hot"></i>
+            <h1>Velvet & Bean</h1>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#menu" class="active">Menu</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#pricing">Pricing & Brews</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#contact">Location & Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <a href="#contact" class="btn btn-primary">Book a Table</a>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars" id="menuIcon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#menu" onclick="toggleMobileMenu()">Menu</a>
+        <a href="#about" onclick="toggleMobileMenu()">About</a>
+        <a href="#pricing" onclick="toggleMobileMenu()">Pricing & Brews</a>
+        <a href="#reviews" onclick="toggleMobileMenu()">Reviews</a>
+        <a href="#contact" onclick="toggleMobileMenu()">Location & Contact</a>
+        <a href="#contact" class="btn btn-primary" style="justify-content: center; margin-top: 8px;" onclick="toggleMobileMenu()">Book a Table</a>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="hero" id="about">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fa-solid fa-award"></i> Award-Winning Specialty Roastery
+            </div>
+            <h1>Experience the Art of <span>Perfect Coffee</span></h1>
+            <p>Handcrafted artisan coffee brewed to absolute perfection. Sourced from sustainable high-altitude farms and roasted fresh daily in downtown.</p>
+            <div class="hero-buttons">
+                <a href="#menu" class="btn btn-primary"><i class="fa-solid fa-mug-saucer"></i> Explore Menu</a>
+                <a href="#contact" class="btn btn-secondary">Visit Our Café</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="hero-img-card">
+                <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=800" alt="Artisan Coffee">
+            </div>
+            <div class="hero-float-badge">
+                <i class="fa-solid fa-star"></i>
+                <div>
+                    <h4 style="font-weight: 700; font-size: 1.1rem;">4.9 / 5.0</h4>
+                    <span style="font-size: 0.85rem; color: var(--text-secondary);">Over 1,250+ reviews</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menu Section -->
+    <section id="menu">
+        <div class="section-header">
+            <span>Our Offerings</span>
+            <h2>Discover Our Artisanal Menu</h2>
+            <p>From single-origin pour overs to velvety lattes and freshly baked pastries, every item is crafted with passion.</p>
+        </div>
+
+        <div class="menu-categories">
+            <button class="menu-tab active" onclick="filterMenu('all', this)">All Items</button>
+            <button class="menu-tab" onclick="filterMenu('espresso', this)">Espresso Bar</button>
+            <button class="menu-tab" onclick="filterMenu('pour-over', this)">Pour Over</button>
+            <button class="menu-tab" onclick="filterMenu('bakery', this)">Fresh Bakery</button>
+        </div>
+
+        <div class="menu-grid" id="menuGrid">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <!-- Pricing / Brew Packages Section -->
+    <section id="pricing">
+        <div class="section-header">
+            <span>Subscriptions & Tasting</span>
+            <h2>Coffee Packages & Pricing</h2>
+            <p>Bring the Velvet & Bean experience home with our curated coffee beans or enjoy our unlimited monthly tasting club.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Daily Brew Pass</h3>
+                <p class="desc">For the true daily coffee lover looking for convenience.</p>
+                <div class="pricing-price">$49 <span>/ month</span></div>
+                <ul class="pricing-features">
+                    <li><i class="fa-solid fa-check"></i> Any standard coffee or latte daily</li>
+                    <li><i class="fa-solid fa-check"></i> 10% off all seasonal drinks</li>
+                    <li><i class="fa-solid fa-check"></i> Free Wi-Fi & priority seating</li>
+                    <li><i class="fa-solid fa-check"></i> 1 free pastry per week</li>
+                </ul>
+                <button class="btn btn-secondary" onclick="showToast('Selected Daily Brew Pass!')">Choose Plan</button>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="featured-badge">Most Popular</div>
+                <h3>Artisan Bean Box</h3>
+                <p class="desc">Freshly roasted single-origin beans delivered to your doorstep.</p>
+                <div class="pricing-price">$28 <span>/ month</span></div>
+                <ul class="pricing-features">
+                    <li><i class="fa-solid fa-check"></i> Two 12oz bags of whole bean coffee</li>
+                    <li><i class="fa-solid fa-check"></i> Curated by our master roasters</li>
+                    <li><i class="fa-solid fa-check"></i> Free shipping worldwide</li>
+                    <li><i class="fa-solid fa-check"></i> Brewing guide & tasting notes included</li>
+                </ul>
+                <button class="btn btn-primary" onclick="showToast('Subscribed to Artisan Bean Box!', 'success')">Subscribe Now</button>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Master Barista Class</h3>
+                <p class="desc">Learn latte art, extraction secrets, and cupping technique.</p>
+                <div class="pricing-price">$120 <span>/ course</span></div>
+                <ul class="pricing-features">
+                    <li><i class="fa-solid fa-check"></i> 3 hands-on weekend workshops</li>
+                    <li><i class="fa-solid fa-check"></i> Professional barista starter kit</li>
+                    <li><i class="fa-solid fa-check"></i> Certificate of completion</li>
+                    <li><i class="fa-solid fa-check"></i> Unlimited coffee during sessions</li>
+                </ul>
+                <button class="btn btn-secondary" onclick="showToast('Enrolled in Barista Masterclass!')">Book Workshop</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews">
+        <div class="section-header">
+            <span>Customer Love</span>
+            <h2>What Our Guests Say</h2>
+            <p>Read genuine testimonials from our community of coffee enthusiasts.</p>
+        </div>
+
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p>"The absolute best caramel macchiato in town! The atmosphere is cozy, staff are incredibly knowledgeable, and the music sets the perfect vibe for remote work."</p>
+                <div class="review-author">
+                    <div class="author-avatar">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" alt="Reviewer">
+                    </div>
+                    <div class="author-info">
+                        <h4>Jessica Vance</h4>
+                        <span>UX Designer & Regular</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p>"I subscribed to the Artisan Bean Box three months ago. Receiving fresh Ethiopian roasts every fortnight has completely elevated my morning coffee ritual at home."</p>
+                <div class="review-author">
+                    <div class="author-avatar">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200" alt="Reviewer">
+                    </div>
+                    <div class="author-info">
+                        <h4>Marcus Sterling</h4>
+                        <span>Coffee Connoisseur</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p>"Their almond croissants paired with a silky flat white make Sunday mornings magical. The interior design is gorgeous and very Instagram-friendly!"</p>
+                <div class="review-author">
+                    <div class="author-avatar">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200" alt="Reviewer">
+                    </div>
+                    <div class="author-info">
+                        <h4>Chloe Dupont</h4>
+                        <span>Food & Travel Blogger</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Contact Section -->
+    <section id="contact">
+        <div class="section-header">
+            <span>Find Us</span>
+            <h2>Location & Contact</h2>
+            <p>Come visit our flagship roastery café or drop us a message for table reservations or private events.</p>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info-side">
+                <h3>Get in Touch</h3>
+                <p style="color: var(--text-secondary);">We would love to hear from you. Visit us or reach out through any of our channels.</p>
+                
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="info-text">
+                        <h4>Location</h4>
+                        <p>742 Evergreen Terrace, Downtown District, Suite 101</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
+                    <div class="info-text">
+                        <h4>Opening Hours</h4>
+                        <p>Mon - Fri: 7:00 AM – 7:00 PM<br>Sat - Sun: 8:00 AM – 8:00 PM</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+                    <div class="info-text">
+                        <h4>Phone & Email</h4>
+                        <p>+1 (555) 382-9011<br>hello@velvetbean.coffee</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-side">
+                <h3 style="margin-bottom: 24px; font-family: 'Playfair Display', serif; font-size: 1.5rem;">Send a Message</h3>
+                <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" id="contactName" class="form-control" placeholder="e.g. Sarah Connor" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="contactEmail" class="form-control" placeholder="e.g. sarah@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Message / Reservation Details</label>
+                        <textarea id="contactMessage" class="form-control" rows="4" placeholder="Table for 2 this Saturday at 10 AM..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="nav-logo" style="margin-bottom: 16px;">
+                    <i class="fa-solid fa-mug-hot"></i>
+                    <h1>Velvet & Bean</h1>
+                </div>
+                <p>Artisanal coffee roastery dedicated to ethical sourcing, sustainable farming practices, and exceptional taste in every single cup.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#menu">Our Menu</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#pricing">Coffee Plans</a></li>
+                    <li><a href="#reviews">Testimonials</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Specialty Drinks</h3>
+                <ul>
+                    <li><a href="#menu">Signature Latte</a></li>
+                    <li><a href="#menu">Cold Brew Nitro</a></li>
+                    <li><a href="#menu">Single Origin Pour Over</a></li>
+                    <li><a href="#menu">Matcha Velvet</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Newsletter</h3>
+                <p>Subscribe to get special discount codes, brewing guides, and new bean drop notifications.</p>
+                <form onsubmit="event.preventDefault(); showToast('Subscribed successfully!', 'success');" style="display: flex; gap: 8px;">
+                    <input type="email" placeholder="Your email..." class="form-control" required style="font-size: 0.85rem; padding: 10px 14px;">
+                    <button type="submit" class="btn btn-primary" style="padding: 10px 16px;"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Velvet & Bean Coffee House. All rights reserved.</p>
+            <p>Designed with passion & artisanal care.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

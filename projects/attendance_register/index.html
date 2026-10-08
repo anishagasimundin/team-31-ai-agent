@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Attendance Register</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div>
+        <h1>Attendance Register</h1>
+        <div class="subtitle">Class: Advanced Computer Science (CS-301)</div>
+      </div>
+      <div class="date-display" id="current-date">May 14, 2025</div>
+    </header>
+
+    <!-- Stats Summary -->
+    <div class="stats-box">
+      <div class="stat-card">
+        <div class="stat-num" id="total-count">0</div>
+        <div class="stat-label">Total Students</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="present-count">0</div>
+        <div class="stat-label">Present</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="absent-count">0</div>
+        <div class="stat-label">Absent</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-bar">
+      <div style="display: flex; gap: 10px;">
+        <button class="btn" onclick="openAddModal()">+ Add Student</button>
+        <button class="btn-outline" onclick="markAll('Present')">Mark All Present</button>
+        <button class="btn-outline" onclick="markAll('Absent')">Mark All Absent</button>
+      </div>
+      <input type="text" class="search-input" id="search-input" placeholder="Search student..." oninput="renderTable()">
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 15%;">Roll No</th>
+            <th style="width: 45%;">Student Name</th>
+            <th style="width: 30%;">Status</th>
+            <th style="width: 10%;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="student-tbody">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Add Student Modal -->
+  <div class="modal-overlay" id="add-modal">
+    <div class="modal">
+      <h3>Add New Student</h3>
+      <form onsubmit="handleAddStudent(event)">
+        <div class="form-group">
+          <label>Roll Number / ID</label>
+          <input type="text" class="form-input" id="new-roll" placeholder="e.g. 101" required>
+        </div>
+        <div class="form-group">
+          <label>Student Name</label>
+          <input type="text" class="form-input" id="new-name" placeholder="e.g. John Doe" required>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn" style="flex:1;">Save</button>
+          <button type="button" class="btn-outline" style="flex:1;" onclick="closeAddModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

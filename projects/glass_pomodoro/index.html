@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glass Pomodoro — Focus & Productivity</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="mode-work">
+
+  <!-- Ambient Floating Background Blobs -->
+  <div class="ambient-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- SVG Gradients Definitions -->
+  <svg width="0" height="0" style="position: absolute;">
+    <defs>
+      <linearGradient id="timer-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#c084fc" />
+        <stop offset="100%" stop-color="#ec4899" />
+      </linearGradient>
+      <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#c084fc" />
+        <stop offset="100%" stop-color="#ec4899" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <header>
+    <div class="logo">
+      <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12.5,7V12.25L16,14.5L15.16,15.75L11,13V7H12.5Z"/></svg>
+      GlassPomodoro
+    </div>
+    <p>Immersive focus sessions with glassmorphic aesthetics</p>
+  </header>
+
+  <main class="main-container">
+    
+    <!-- Top action buttons (Tasks & Settings) -->
+    <div class="top-actions">
+      <button class="icon-btn" id="task-btn" title="Tasks"><i class="fa-solid fa-list-check"></i></button>
+      <button class="icon-btn" id="settings-btn" title="Settings"><i class="fa-solid fa-gear"></i></button>
+    </div>
+
+    <!-- Mode switch pills -->
+    <div class="mode-switch">
+      <button class="mode-btn active" data-mode="work">Work</button>
+      <button class="mode-btn" data-mode="short">Short Break</button>
+      <button class="mode-btn" data-mode="long">Long Break</button>
+    </div>
+
+    <!-- Timer Ring & Display -->
+    <div class="timer-wrapper">
+      <svg class="progress-ring" width="260" height="260">
+        <circle class="progress-ring__circle" stroke-width="8" fill="transparent" r="116" cx="130" cy="130"/>
+        <circle class="progress-ring__circle-progress" id="progress-bar" stroke-width="8" fill="transparent" r="116" cx="130" cy="130"/>
+      </svg>
+      <div class="timer-display">
+        <div class="time" id="time-display">25:00</div>
+        <div class="session-status" id="session-status">Focus Time</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="btn-primary" id="start-btn">
+        <i class="fa-solid fa-play" id="start-icon"></i> <span id="start-text">Start Focus</span>
+      </button>
+      <button class="btn-secondary" id="reset-btn" title="Reset Timer">
+        <i class="fa-solid fa-rotate-right"></i> Reset
+      </button>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-value" id="completed-count">0</span>
+        <span class="stat-label">Completed</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="streak-count">0</span>
+        <span class="stat-label">Day Streak</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="focus-time-total">0m</span>
+        <span class="stat-label">Focus Time</span>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Built with Glassmorphism & Vanilla JS • Audio & Desktop Notifications Enabled</p>
+  </footer>
+
+  <!-- Tasks Modal -->
+  <div class="modal-overlay" id="tasks-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-list-check"></i> Tasks for Today</h3>
+        <button class="close-modal" id="close-tasks"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="task-input-group">
+        <input type="text" class="task-input" id="new-task-input" placeholder="What are you working on?">
+        <button class="btn-add" id="add-task-btn">Add</button>
+      </div>
+      <ul class="task-list" id="task-list">
+        <!-- Dynamic tasks -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settings-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-gear"></i> Timer Settings</h3>
+        <button class="close-modal" id="close-settings"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="setting-row">
+        <label>Work Duration (mins)</label>
+        <input type="number" id="setting-work" min="1" max="99" value="25">
+      </div>
+      <div class="setting-row">
+        <label>Short Break (mins)</label>
+        <input type="number" id="setting-short" min="1" max="30" value="5">
+      </div>
+      <div class="setting-row">
+        <label>Long Break (mins)</label>
+        <input type="number" id="setting-long" min="1" max="60" value="15">
+      </div>
+      <button class="btn-save-settings" id="save-settings-btn">Save & Apply</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">Session completed successfully!</div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

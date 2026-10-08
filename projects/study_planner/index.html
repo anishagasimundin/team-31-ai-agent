@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyPulse — Smart Student Planner & Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- FontAwesome & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header>
+      <div class="logo-area">
+        <div class="logo-icon">
+          <i class="fa-solid fa-book-open-reader"></i>
+        </div>
+        <div>
+          <h1>StudyPulse Planner</h1>
+          <p>Organize subjects, assignments & study sessions</p>
+        </div>
+      </div>
+      <div class="header-stats">
+        <div class="stat-box">
+          <div class="stat-val" id="total-tasks-stat">0</div>
+          <div class="stat-lbl">Total Tasks</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="completed-tasks-stat">0</div>
+          <div class="stat-lbl">Completed</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <div class="dashboard-grid">
+      
+      <!-- Sidebar: Add Study Task & Mini Timer -->
+      <div class="sidebar">
+        
+        <!-- Add Task Card -->
+        <div class="card">
+          <h3><i class="fa-solid fa-plus"></i> Add Study Task</h3>
+          <form id="task-form" onsubmit="handleAddTask(event)">
+            <div class="form-group">
+              <label>Task Title / Assignment</label>
+              <input type="text" class="form-input" id="task-title" placeholder="e.g., Chapter 4 Calculus Quiz Prep" required>
+            </div>
+
+            <div class="form-group">
+              <label>Subject</label>
+              <select class="form-select" id="task-subject">
+                <option value="Mathematics">Mathematics</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Physics">Physics</option>
+                <option value="Literature">Literature</option>
+                <option value="History">History</option>
+                <option value="Chemistry">Chemistry</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Priority</label>
+              <select class="form-select" id="task-priority">
+                <option value="high">High Priority</option>
+                <option value="medium" selected>Medium Priority</option>
+                <option value="low">Low Priority</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Due Date</label>
+              <input type="date" class="form-input" id="task-date" required>
+            </div>
+
+            <button type="submit" class="btn-primary">
+              <i class="fa-solid fa-check"></i> Add to Study Plan
+            </button>
+          </form>
+        </div>
+
+        <!-- Quick Focus Pomodoro Widget -->
+        <div class="card">
+          <h3><i class="fa-solid fa-clock"></i> Quick Focus Timer</h3>
+          <div class="mini-timer">
+            <div class="mini-timer-time" id="mini-time">25:00</div>
+            <div class="mini-timer-btns">
+              <button class="btn-mini" id="mini-start-btn" onclick="toggleMiniTimer()">Start</button>
+              <button class="btn-mini" onclick="resetMiniTimer()">Reset</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Main Content: Task Management & Filter -->
+      <div class="main-content">
+        
+        <!-- Planner Controls / Filter Bar -->
+        <div class="planner-nav">
+          <div class="filter-pills">
+            <button class="filter-btn active" onclick="setFilter('all', this)">All Tasks</button>
+            <button class="filter-btn" onclick="setFilter('pending', this)">Pending</button>
+            <button class="filter-btn" onclick="setFilter('completed', this)">Completed</button>
+          </div>
+          <input type="text" class="search-input" id="search-input" placeholder="Search tasks..." oninput="renderTasks()">
+        </div>
+
+        <!-- Tasks List Container -->
+        <div class="tasks-container" id="tasks-container">
+          <!-- Dynamically populated -->
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

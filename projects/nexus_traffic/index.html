@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusTraffic - Intelligent Urban Traffic Control System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside>
+            <div class="sidebar-header">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-traffic-light"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>NexusTraffic</h1>
+                    <span>Smart City OS</span>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a class="nav-item active" onclick="switchView('dashboard', this)">
+                    <i class="fa-solid fa-network-wired"></i>
+                    <span>Live Simulation</span>
+                </a>
+                <a class="nav-item" onclick="switchView('intersections', this)">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>Intersections</span>
+                </a>
+                <a class="nav-item" onclick="switchView('analytics', this)">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Traffic Analytics</span>
+                </a>
+                <a class="nav-item" onclick="switchView('incidents', this)">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>Incident Alerts</span>
+                </a>
+            </div>
+            <div class="sidebar-footer">
+                <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="btn btn-secondary" onclick="resetSystem()" title="Reset System" style="padding: 8px 12px; font-size: 0.8rem;">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Area -->
+        <main>
+            <header>
+                <div class="header-title">
+                    <h2 id="headerTitle">Intersection Live Simulation</h2>
+                    <p id="headerSubtitle">AI-powered adaptive traffic signal coordination in real time.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="toggleMode()" id="modeToggleBtn">
+                        <i class="fa-solid fa-robot"></i> Mode: AI Adaptive
+                    </button>
+                    <button class="btn btn-primary" onclick="triggerEmergencyVehicle()">
+                        <i class="fa-solid fa-truck-medical"></i> Simulate Emergency
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <!-- VIEW 1: LIVE SIMULATION -->
+                <section id="dashboardView" class="view-section active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-label">Active Vehicles</span>
+                                <div class="stat-icon blue"><i class="fa-solid fa-car"></i></div>
+                            </div>
+                            <div class="stat-value" id="statVehicles">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-label">Avg Wait Time</span>
+                                <div class="stat-icon green"><i class="fa-solid fa-clock"></i></div>
+                            </div>
+                            <div class="stat-value" id="statWaitTime">24s</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-label">Congestion Level</span>
+                                <div class="stat-icon yellow"><i class="fa-solid fa-gauge-high"></i></div>
+                            </div>
+                            <div class="stat-value" id="statCongestion">Moderate</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-label">CO2 Saved Today</span>
+                                <div class="stat-icon green"><i class="fa-solid fa-leaf"></i></div>
+                            </div>
+                            <div class="stat-value" id="statCo2">1.4t</div>
+                        </div>
+                    </div>
+
+                    <div class="simulation-container">
+                        <div class="card" style="margin-bottom: 0;">
+                            <div class="card-header">
+                                <h3>Downtown 4-Way Intersection #402</h3>
+                                <div style="display: flex; gap: 8px;">
+                                    <span class="badge badge-green"><i class="fa-solid fa-circle"></i> Live Feed</span>
+                                    <span class="badge badge-yellow" id="simulationSpeedBadge">1x Speed</span>
+                                </div>
+                            </div>
+                            <canvas id="trafficCanvas"></canvas>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; flex-wrap: wrap; gap: 12px;">
+                                <div style="display: flex; gap: 8px;">
+                                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="setSpeed(1)">1x</button>
+                                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="setSpeed(2)">2x</button>
+                                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="setSpeed(4)">4x</button>
+                                </div>
+                                <span style="font-size: 0.85rem; color: var(--text-secondary);">Click cars to inspect telemetry or use controls to force signals.</span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 24px;">
+                            <div class="card" style="margin-bottom: 0;">
+                                <div class="card-header">
+                                    <h3>Signal Status & Control</h3>
+                                </div>
+                                <div class="controls-grid" style="grid-template-columns: 1fr;">
+                                    <div class="control-card">
+                                        <h4>North-South <span class="light-badge" id="nsLightBadge">RED</span></h4>
+                                        <p style="font-size: 0.8rem; color: var(--text-secondary);" id="nsTimer">Time remaining: 12s</p>
+                                        <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px;" onclick="forceSignal('ns')">Force Green</button>
+                                    </div>
+                                    <div class="control-card">
+                                        <h4>East-West <span class="light-badge" id="ewLightBadge">GREEN</span></h4>
+                                        <p style="font-size: 0.8rem; color: var(--text-secondary);" id="ewTimer">Time remaining: 18s</p>
+                                        <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px;" onclick="forceSignal('ew')">Force Green</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card" style="margin-bottom: 0; flex: 1;">
+                                <div class="card-header">
+                                    <h3>AI Optimization Log</h3>
+                                </div>
+                                <div id="aiLogContainer" style="display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem; max-height: 200px; overflow-y: auto;">
+                                    <div style="color: var(--text-secondary);"><i class="fa-solid fa-microchip" style="color: var(--accent);"></i> AI initialized green wave algorithm.</div>
+                                    <div style="color: var(--text-secondary);"><i class="fa-solid fa-car-side" style="color: var(--green);"></i> East-West queue cleared successfully.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 2: INTERSECTIONS -->
+                <section id="intersectionsView" class="view-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                        <h3>Managed City Intersections</h3>
+                        <button class="btn btn-primary" onclick="showToast('New intersection added to mesh network.', 'success')">
+                            <i class="fa-solid fa-plus"></i> Connect Intersection
+                        </button>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;" id="intersectionGrid">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- VIEW 3: ANALYTICS -->
+                <section id="analyticsView" class="view-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Hourly Traffic Volume & Flow Efficiency</h3>
+                            <span class="badge badge-green">AI Optimized</span>
+                        </div>
+                        <p style="color: var(--text-secondary); margin-bottom: 24px;">Comparison of legacy timer-based systems vs. NexusTraffic AI Adaptive neural control.</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 24px;">
+                            <div style="background: var(--bg-secondary); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Average Speed Increase</span>
+                                <h3 style="font-size: 2rem; color: var(--green); margin-top: 8px;">+34.2%</h3>
+                            </div>
+                            <div style="background: var(--bg-secondary); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Idle Fuel Waste Reduction</span>
+                                <h3 style="font-size: 2rem; color: var(--accent); margin-top: 8px;">28.5%</h3>
+                            </div>
+                            <div style="background: var(--bg-secondary); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Peak Hour Delay Cut</span>
+                                <h3 style="font-size: 2rem; color: var(--yellow); margin-top: 8px;">-18.4 mins</h3>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 4: INCIDENTS -->
+                <section id="incidentsView" class="view-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                        <h3>Active Incident & Emergency Feed</h3>
+                        <button class="btn btn-danger" onclick="triggerEmergencyVehicle()">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Report Incident
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Incident ID</th>
+                                        <th>Location</th>
+                                        <th>Type</th>
+                                        <th>Severity</th>
+                                        <th>Status</th>
+                                        <th>Action Taken</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="incidentsTableBody">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
